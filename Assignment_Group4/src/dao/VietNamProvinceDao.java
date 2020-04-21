@@ -166,4 +166,11 @@ public class VietNamProvinceDao {
 		 preparedStatement1.setString(6, vnD.getName());
 		 preparedStatement1.execute();
 	}
+	public void deleteAprovince(String name) throws SQLException {
+		Connection conn = DbConnect.getConnection();
+		 String deletion = "DELETE FROM provinces WHERE name=" +  "\"" + name + "\"";
+		 PreparedStatement preparedStatement = conn.prepareStatement(deletion);
+		preparedStatement.executeUpdate();
+	}
+
 }
