@@ -18,17 +18,17 @@ import dao.VietNamProvinceDao;
 import model.VietNamProvinces;
 
 /**
- * Servlet implementation class InsertAVietNamProvince
+ * Servlet implementation class UpdateAProvince
  */
-@WebServlet("/province/insertavietnamprovince")
-public class InsertAVietNamProvince extends HttpServlet {
+@WebServlet("/province/updateaprovince")
+public class UpdateAProvince extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Gson gson = new Gson(); 
+	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertAVietNamProvince() {
+    public UpdateAProvince() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,7 +42,7 @@ public class InsertAVietNamProvince extends HttpServlet {
 		ArrayList<VietNamProvinces> vnpLst;
 		try {
 			vnpLst = vnD.selectAllProvinces();
-			String vnPStatistic = this.gson .toJson(vnpLst);
+			String vnPStatistic = this.gson  .toJson(vnpLst);
 			PrintWriter out = response.getWriter();
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
@@ -69,7 +69,7 @@ public class InsertAVietNamProvince extends HttpServlet {
 		VietNamProvinceDao vnd = new VietNamProvinceDao();
 		VietNamProvinces vnDao = new VietNamProvinces(name, confirmed, underTreatment, recovered, deaths, date);
 		try {
-			vnd.insertAProvince(vnDao);
+			vnd.updateAProvince(vnDao);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
