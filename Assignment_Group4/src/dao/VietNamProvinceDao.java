@@ -146,7 +146,10 @@ public class VietNamProvinceDao {
 		 preparedStatement1.setString(6, vnD.getDate());
 		 preparedStatement1.execute();
 	}
-	public void updateAProvince(VietNamProvinces vnD) {
+	public void updateAProvince(VietNamProvinces vnD) throws SQLException {
+		LocalDateTime now = LocalDateTime.now();
+		String date = now.toString();
+		Connection conn = DbConnect.getConnection();
 		String updateValue = "Update provinces Set "
 				+"confirmed=?"
 				+ ",undertreatment=?"
@@ -154,5 +157,13 @@ public class VietNamProvinceDao {
 				+ "deaths=?"
 				+ ",date=,"
 				+ " where name=?";
+		PreparedStatement preparedStatement1 = conn.prepareStatement(updateValue);
+		 preparedStatement1.setDouble(1, vnD.getConfirmed());
+		 preparedStatement1.setDouble(2, vnD.getUnderTreatment());
+		 preparedStatement1.setDouble(3, vnD.getRecovered());
+		 preparedStatement1.setDouble(4, vnD.getDeaths());
+		 preparedStatement1.setString(5, date);
+		 preparedStatement1.setString(6, vnD.getName());
+		 preparedStatement1.execute();
 	}
 }
