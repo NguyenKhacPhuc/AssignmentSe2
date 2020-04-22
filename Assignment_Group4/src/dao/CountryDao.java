@@ -39,6 +39,7 @@ public class CountryDao {
 			int count = 0;
 			count = i +1;
 			JSONObject o = worldStatistic.getJSONObject(i);
+			System.out.println(o.toString());
 			String country = o.getString("Country");
 			double newConfirmed = o.getDouble("NewConfirmed");
 			double totalConfirmed = o.getDouble("TotalConfirmed");
@@ -59,7 +60,7 @@ public class CountryDao {
 			preparedStatement.setString(8, date);
 			preparedStatement.setString(9, countryCode);
 			preparedStatement.setInt(10, count);
-			preparedStatement.execute();
+			preparedStatement.executeUpdate();
 		}
 	}
 	public ArrayList<Country> selectAllCountry() throws SQLException{

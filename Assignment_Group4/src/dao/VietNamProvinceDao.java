@@ -91,10 +91,10 @@ public class VietNamProvinceDao {
 				+"confirmed=?"
 				+ ",undertreatment=?"
 				+ ",recovered=?"
-				+ "deaths=?"
-				+ ",date=,"
-				+ " where name=?";
-		String check = "SELECT EXISTS(SELECT * from provinces WHERE name=? ";
+				+ ",deaths=?"
+				+ ",date=?"
+				+ " where name = ?;";
+		String check = "SELECT EXISTS(SELECT * from provinces WHERE name=?)";
 		
 		 Document connect =  SSLHelper.getConnection(url).userAgent("HTTPS").get();
 		 Element table1 = connect.select("table.table-striped.table-covid19").get(0);
@@ -108,9 +108,9 @@ public class VietNamProvinceDao {
 		 for(int i = 0; i<nameOfProvince.size() ;i++) {
 		 PreparedStatement preparedStatement = conn.prepareStatement(check);
 		 preparedStatement.setString(1, nameOfProvince.get(i));
-		 int rs = preparedStatement.executeUpdate();
+		ResultSet rs = preparedStatement.executeQuery();
 		 System.out.println(rs);
-		 if(rs == 1) {
+		 if(rs.next()) {
 			 PreparedStatement preparedStatement1 = conn.prepareStatement(updateValue);
 			 preparedStatement1.setDouble(1, confirmedsLst.get(i));
 			 preparedStatement1.setDouble(2, underTreatmentLst.get(i));
@@ -119,7 +119,7 @@ public class VietNamProvinceDao {
 			 preparedStatement1.setString(5, date);
 			 preparedStatement1.setString(6, nameOfProvince.get(i));
 			 preparedStatement1.execute();
-		 }else if(rs == 0) {
+		 }else {
 			 PreparedStatement preparedStatement1 = conn.prepareStatement(insertValue);
 			 preparedStatement1.setString(1, nameOfProvince.get(i));
 			 preparedStatement1.setDouble(2, confirmedsLst.get(i));
@@ -129,10 +129,9 @@ public class VietNamProvinceDao {
 			 preparedStatement1.setString(6, date);
 			 preparedStatement1.execute();
 		 }
-		 
-		 
 	}
 }
+
 	public void insertAProvince(VietNamProvinces vnD) throws SQLException {
 		//INSERT TO DATABASE
 		Connection conn = DbConnect.getConnection();

@@ -19,7 +19,7 @@ import model.VietNamProvinces;
 /**
  * Servlet implementation class AllProvincesStatistic
  */
-@WebServlet("/provinces/displayall")
+@WebServlet("/province/displayall")
 public class AllProvincesStatistic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();

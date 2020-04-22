@@ -19,7 +19,7 @@ import model.VietNamProvinces;
 /**
  * Servlet implementation class UpdateStatisticAuto
  */
-@WebServlet("/provinces/autoupdate")
+@WebServlet("/province/autoupdate")
 public class UpdateStatisticAuto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();

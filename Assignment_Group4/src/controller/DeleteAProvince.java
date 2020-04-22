@@ -41,7 +41,7 @@ public class DeleteAProvince extends HttpServlet {
 		ArrayList<VietNamProvinces> vnpLst;
 		try {
 			vnpLst = vnD.selectAllProvinces();
-			String vnPStatistic = this.gson   .toJson(vnpLst);
+			String vnPStatistic = this.gson.toJson(vnpLst);
 			PrintWriter out = response.getWriter();
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
