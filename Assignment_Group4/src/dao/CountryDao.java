@@ -36,8 +36,6 @@ public class CountryDao {
 				+",countryCode=? "
 				+ "WHERE ID = ?;";
 		for(int i = 0; i<worldStatistic.length();i++) {
-			int count = 0;
-			count = i +1;
 			JSONObject o = worldStatistic.getJSONObject(i);
 			System.out.println(o.toString());
 			String country = o.getString("Country");
@@ -59,7 +57,7 @@ public class CountryDao {
 			preparedStatement.setDouble(7,totalRecovered);
 			preparedStatement.setString(8, date);
 			preparedStatement.setString(9, countryCode);
-			preparedStatement.setInt(10, count);
+			preparedStatement.setInt(10, i++);
 			preparedStatement.executeUpdate();
 		}
 	}

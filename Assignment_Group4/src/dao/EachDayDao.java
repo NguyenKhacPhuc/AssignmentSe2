@@ -66,32 +66,46 @@ public class EachDayDao {
 	}
 	public void updateDataInEachDayTable() throws IOException, SQLException {
 		Connection conn = DbConnect.getConnection();
-		String updateVnDaysData = "UPDATE eachday SET "
-				+"cases=?"
-				+",recovered=?"
-				+",date=?"
-				+",deaths=? "
-				+"Where ID=?; ";
+		String updateVnDaysData = "Insert into eachday (cases,recovered,date,death) values (?,?,?,?)";
+		JSONArray vnDaysData = DbConnect.getUpdateDays();
+		JSONObject nextday = vnDaysData.getJSONObject(vnDaysData.length()-1);
+		String query = "SELECT EXISTS(SELECT * from eachday WHERE date=?)";
+		PreparedStatement preparedStatement = conn.prepareStatement(query);
+		preparedStatement.setString(1,nextday.getString("Date"));
+		ResultSet rs = preparedStatement.executeQuery();
+		if(rs.next()) {
+			System.out.println("Already have");
+		}
+		else {
+			double cases = nextday.getDouble("Confirmed");
+			double recovered = nextday.getDouble("Recovered");
+			String date = nextday.getString("Date");
+			double deaths = nextday.getDouble("Deaths");
+			PreparedStatement preparedStatement1 = conn.prepareStatement(updateVnDaysData);
+			preparedStatement1.setDouble(1, cases);
+			preparedStatement1.setDouble(2, recovered);
+			preparedStatement1.setString(3, date);
+			preparedStatement1.setDouble(4, deaths);
+			preparedStatement1.executeUpdate();
+		}
+		
+}
+	public void insertDaysInVietNam() throws IOException, SQLException {
+		Connection conn = DbConnect.getConnection();
+		String insert = "Insert into eachday (cases,recovered,date,deaths) values(?,?,?,?)";
 		JSONArray vnDaysData = DbConnect.getUpdateDays();
 		for(int i = 0;i<vnDaysData.length();i++) {
-			int count = 0;
-			count = i+1;
 			JSONObject day = vnDaysData.getJSONObject(i);
-			System.out.println(day.toString());
 			double cases = day.getDouble("Confirmed");
 			double recovered = day.getDouble("Recovered");
 			String date = day.getString("Date");
 			double deaths = day.getDouble("Deaths");
-			
-			PreparedStatement preparedStatement = conn.prepareStatement(updateVnDaysData);
+			PreparedStatement preparedStatement = conn.prepareStatement(insert);
 			preparedStatement.setDouble(1, cases);
 			preparedStatement.setDouble(2, recovered);
 			preparedStatement.setString(3, date);
 			preparedStatement.setDouble(4, deaths);
-			preparedStatement.setInt(5, count);
 			preparedStatement.execute();
+		}
 	}
-		
-}
-
 }
