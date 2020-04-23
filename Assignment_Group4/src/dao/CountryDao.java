@@ -195,8 +195,6 @@ public class CountryDao {
 				+ ",totalRecovered,date,countryCode)"+" VALUES (?,?,?,?,?,?,?,?,?);";
 		
 		for(int i = 0; i<worldStatistic.length();i++) {
-			int count = 0;
-			count = i +1;
 			JSONObject o = worldStatistic.getJSONObject(i);
 			String country = o.getString("Country");
 			double newConfirmed = o.getDouble("NewConfirmed");
@@ -217,7 +215,6 @@ public class CountryDao {
 			preparedStatement.setDouble(7,totalRecoverd);
 			preparedStatement.setString(8, date);
 			preparedStatement.setString(9, countryCode);
-			preparedStatement.setInt(10, count);
 			preparedStatement.execute();
 	}
 }
