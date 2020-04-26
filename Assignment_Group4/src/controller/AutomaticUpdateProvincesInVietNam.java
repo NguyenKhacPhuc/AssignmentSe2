@@ -13,24 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import dao.CountryDao;
-
-import model.Country;
-
-
+import dao.VietNamProvinceDao;
+import model.VietNamProvinces;
 
 /**
- * Servlet implementation class test
+ * Servlet implementation class UpdateStatisticAuto
  */
-@WebServlet("/country/displayall")
-public class CountriesApi extends HttpServlet {
+@WebServlet("/province/autoupdate")
+public class AutomaticUpdateProvincesInVietNam extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Gson gson = new Gson();;
+	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CountriesApi() {
+    public AutomaticUpdateProvincesInVietNam() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,18 +37,17 @@ public class CountriesApi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		VietNamProvinceDao vnD = new VietNamProvinceDao();
+		ArrayList<VietNamProvinces> vnpLst;
 		try {
-			
-			CountryDao c = new CountryDao();
-			ArrayList<Country> cLst = c.selectAllCountry();
-				String country = this.gson.toJson(cLst);
-				PrintWriter out = response.getWriter();
-		        response.setContentType("application/json");
-		        response.setCharacterEncoding("UTF-8");
-		        out.print(country);
-		        out.flush(); 
-			
-		} catch (IOException | SQLException e) {
+			vnpLst = vnD.selectAllProvinces();
+			String vnPStatistic = this.gson  .toJson(vnpLst);
+			PrintWriter out = response.getWriter();
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        out.print(vnPStatistic);
+	        out.flush(); 
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -63,6 +59,13 @@ public class CountriesApi extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		VietNamProvinceDao vnD = new VietNamProvinceDao();
+		try {
+			vnD.automaticUpdateProvinces();
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		doGet(request, response);
 	}
 

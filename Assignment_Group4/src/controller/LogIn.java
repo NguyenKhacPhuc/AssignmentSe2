@@ -1,9 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,23 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import dao.UserDao;
-import model.User;
 
 /**
- * Servlet implementation class CreateUser
+ * Servlet implementation class LogIn
  */
-@WebServlet("/user/createuser")
-public class CreateUser extends HttpServlet {
+@WebServlet("/login")
+public class LogIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private  final Gson gson = new Gson();
-    private UserDao uD; 
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateUser() {
+    public LogIn() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,19 +31,17 @@ public class CreateUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		UserDao userD = new UserDao();
 		try {
-			// TODO Auto-generated catch block
-			ArrayList<User> userLst = uD.getAllUser();
-			String user = this.gson.toJson(userLst);
-			PrintWriter out = response.getWriter();
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        out.print(user);
-	        out.flush();
+			String result = userD.LogIn(username, password);
+			response.getWriter().append(result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
@@ -57,22 +49,6 @@ public class CreateUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String email = request.getParameter("email");
-		String age = request.getParameter("age");
-		int intAge = Integer.parseInt(age);
-		String dob = request.getParameter("dob");
-		User u = new User(username,password,email,intAge,dob);
-		uD = new UserDao();
-		try {
-			uD.createUser(u);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 		doGet(request, response);
 	}
 

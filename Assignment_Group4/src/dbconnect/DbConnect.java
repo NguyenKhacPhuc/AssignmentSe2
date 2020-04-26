@@ -39,7 +39,7 @@ public class DbConnect {
 		URL url = new URL(WORLD);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
-//		connection.setRequestProperty("Accept", "application/json");
+		connection.setRequestProperty("Accept", "application/json");
 		if (connection.getResponseCode() != 200) {
 		    throw new RuntimeException("Failed : HTTP error code : "
 		            + connection.getResponseCode());
@@ -50,7 +50,6 @@ public class DbConnect {
 		String output = convertToString(in);
 		JSONObject all = new JSONObject(output);
 		return all;
-		
 		
 	}
 	private static String convertToString(InputStream in) {

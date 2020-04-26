@@ -18,7 +18,7 @@ import model.WorldGeneral;
 /**
  * Servlet implementation class AutoUpdateWorldGeneral
  */
-@WebServlet("/worldgeneral/autoupdateworldgeneral")
+@WebServlet("/world/autoupdateworldgeneral")
 public class AutoUpdateWorldGeneral extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
@@ -38,7 +38,6 @@ public class AutoUpdateWorldGeneral extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			WorldGeneralDao wG = new WorldGeneralDao();
-			wG.updateCurrentWorldSitutation();
 			WorldGeneral w = wG.getCurrentWorldGeneral();
 			String world = this.gson  .toJson(w);
 			PrintWriter out = response.getWriter();

@@ -17,17 +17,17 @@ import dao.CountryDao;
 import model.Country;
 
 /**
- * Servlet implementation class UpdateACountry
+ * Servlet implementation class Countries
  */
-@WebServlet("/country/updateacountry")
-public class UpdateACountry extends HttpServlet {
+@WebServlet("/country")
+public class Countries extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateACountry() {
+    public Countries() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +41,7 @@ public class UpdateACountry extends HttpServlet {
 			
 			CountryDao c = new CountryDao();
 			ArrayList<Country> cLst = c.selectAllCountry();
-				String country = this.gson  .toJson(cLst);
+				String country = this.gson .toJson(cLst);
 				PrintWriter out = response.getWriter();
 		        response.setContentType("application/json");
 		        response.setCharacterEncoding("UTF-8");
@@ -71,7 +71,7 @@ public class UpdateACountry extends HttpServlet {
 		 Country c = new Country(country, newConfirmed, totalConfirmed, newDeaths, totalDeaths, newRecovered, totalRecovered, date, countryCode);
 		 try {
 				CountryDao cD = new CountryDao();
-				if(!(cD.checkExist(c.getCountryCode()))){
+				if(cD.checkExist(c.getCountryCode())){
 					cD.updateSpecificCountry(c);
 				}
 			} catch (IOException | SQLException e) {
@@ -80,6 +80,50 @@ public class UpdateACountry extends HttpServlet {
 			}
 			 
 			doGet(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String country = request.getParameter("country");
+		 double newConfirmed = Double.parseDouble(request.getParameter("newconfirmed"));
+		 double totalConfirmed= Double.parseDouble(request.getParameter("totalconfirmed"));
+		 double newDeaths = Double.parseDouble(request.getParameter("newdeaths"));
+		 double totalDeaths = Double.parseDouble(request.getParameter("totaldeaths"));
+		 double newRecovered = Double.parseDouble(request.getParameter("newrecovered"));
+		 double totalRecovered = Double.parseDouble(request.getParameter("totalrecovered"));
+		 String  date = request.getParameter("date");
+		 String countryCode = request.getParameter("countrycode");
+		 Country c = new Country(country, newConfirmed, totalConfirmed, newDeaths, totalDeaths, newRecovered, totalRecovered, date, countryCode);
+		 try {
+			CountryDao cD = new CountryDao();
+			if(!(cD.checkExist(c.getCountryCode()))){
+				cD.insertACountry(c);
+			}
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		doGet(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String cD = request.getParameter("countrycode");
+		CountryDao coD;
+		try {
+			coD = new CountryDao();
+			coD.deleteCountry(cD);
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		doGet(request, response);
 	}
 

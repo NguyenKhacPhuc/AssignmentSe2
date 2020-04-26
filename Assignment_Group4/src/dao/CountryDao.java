@@ -140,7 +140,7 @@ public class CountryDao {
 	public void deleteCountry(String cD) throws SQLException {
 		 String deletion = "DELETE FROM country WHERE countryCode=" +  "\"" + cD + "\"";
 		 PreparedStatement preparedStatement = conn.prepareStatement(deletion);
-		preparedStatement.executeUpdate();
+		preparedStatement.execute();
 	}
 	public void updateSpecificCountry(Country c) throws SQLException {
 		String updateCountry = "UPDATE country SET "

@@ -14,7 +14,6 @@ public class SSLHelper {
     static public Connection getConnection(String url){
         return Jsoup.connect(url).sslSocketFactory(SSLHelper.socketFactory());
     }
-
     static private SSLSocketFactory socketFactory() {
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
             public java.security.cert.X509Certificate[] getAcceptedIssuers() {

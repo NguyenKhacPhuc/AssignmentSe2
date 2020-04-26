@@ -19,7 +19,7 @@ import model.EachDay;
 /**
  * Servlet implementation class UpdateVnDays
  */
-@WebServlet("/eachday/updatevndays")
+@WebServlet("/vietnamdays/updatevndays")
 public class UpdateVnDays extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();

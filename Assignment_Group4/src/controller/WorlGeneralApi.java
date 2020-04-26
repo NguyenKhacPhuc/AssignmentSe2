@@ -19,7 +19,7 @@ import model.WorldGeneral;
 /**
  * Servlet implementation class WorlGeneralApi
  */
-@WebServlet("/worldgeneral/worldhistorycal")
+@WebServlet("/world/worldhistorycal")
 public class WorlGeneralApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();

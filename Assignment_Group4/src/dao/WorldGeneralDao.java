@@ -108,6 +108,7 @@ public class WorldGeneralDao {
 	}
 		return world;
 }
+	
 	public void updateWorldGeneralManually(WorldGeneral w) throws SQLException {
 		Connection conn = DbConnect.getConnection();
 		String update = "UPDATE worldgeneral " + 
@@ -128,6 +129,22 @@ public class WorldGeneralDao {
 		preparedStatement.setInt(5, w.getTotalDeaths());
 		preparedStatement.setInt(6, w.getNewRecovered());
 		preparedStatement.setInt(7, w.getTotalRecovered());
+		preparedStatement.execute();
+	}
+	public void insertWorldGeneralManually(String date,int newConfirmed, int totalConfirmed, int newDeaths, int totalDeaths, int newRecovered,
+			int totalRecovered) throws SQLException {
+	
+		String updateCurrentWorldSituation = "INSERT INTO worldgeneral "
+				+ "(date,newConfirmed, totalConfirmed, newDeaths,totalDeaths,newRecovered"
+				+ ",totalRecovered)"+" VALUES (?,?,?,?,?,?,?);";
+		PreparedStatement preparedStatement = conn.prepareStatement(updateCurrentWorldSituation);
+		preparedStatement.setString(1, date);
+		preparedStatement.setInt(2, newConfirmed);
+		preparedStatement.setInt(3, totalConfirmed);
+		preparedStatement.setInt(4, newDeaths);
+		preparedStatement.setInt(5, totalDeaths);
+		preparedStatement.setInt(6, newRecovered);
+		preparedStatement.setInt(7, totalRecovered);
 		preparedStatement.execute();
 	}
 }

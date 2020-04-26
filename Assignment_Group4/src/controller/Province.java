@@ -18,17 +18,17 @@ import dao.VietNamProvinceDao;
 import model.VietNamProvinces;
 
 /**
- * Servlet implementation class UpdateAProvince
+ * Servlet implementation class Province
  */
-@WebServlet("/province/updateaprovince")
-public class UpdateAProvince extends HttpServlet {
+@WebServlet("/province")
+public class Province extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateAProvince() {
+    public Province() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -70,6 +70,46 @@ public class UpdateAProvince extends HttpServlet {
 		VietNamProvinces vnDao = new VietNamProvinces(name, confirmed, underTreatment, recovered, deaths, date);
 		try {
 			vnd.updateAProvince(vnDao);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doGet(request, response);
+	}
+		
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 */
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		LocalDateTime now = LocalDateTime.now();
+		String date = now.toString();
+		String name = request.getParameter("name");
+		double confirmed = Double.parseDouble(request.getParameter("confirmed"));
+		double underTreatment = Double.parseDouble(request.getParameter("undertreatment"));
+		double recovered = Double.parseDouble(request.getParameter("recovered"));
+		double deaths = Double.parseDouble(request.getParameter("deaths"));
+		VietNamProvinceDao vnd = new VietNamProvinceDao();
+		VietNamProvinces vnDao = new VietNamProvinces(name, confirmed, underTreatment, recovered, deaths, date);
+		try {
+			vnd.insertAProvince(vnDao);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doGet(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String name = request.getParameter("name");
+		VietNamProvinceDao vnD = new VietNamProvinceDao();
+		try {
+			vnD.deleteAprovince(name);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

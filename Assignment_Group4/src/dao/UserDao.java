@@ -104,4 +104,34 @@ public class UserDao {
 		}
 		return false;
 	}
+	public String LogIn(String username, String passwordLog) throws SQLException {
+		Connection conn = dbconnect.DbConnect.getConnection();
+		ArrayList<User> userLst = new ArrayList<User>();
+		String selectAllCountry= "SELECT * FROM user";
+		PreparedStatement preparedStatement = conn.prepareStatement(selectAllCountry);
+		ResultSet rs = preparedStatement.executeQuery();
+		while(rs.next()) {
+			int iD= rs.getInt("ID");
+			String name = rs.getString("username");
+			String password = rs.getString("password");
+			String email = rs.getString("email");
+			int age = rs.getInt("age");
+			String dob = rs.getString("dob");
+			User user = new User(name,password,email,age,dob);
+			user.setiD(iD);
+			userLst.add(user);
+		}
+		for(User u : userLst) {
+			if(username.equals(u.getUsername())) {
+				if(passwordLog.equals(u.getPassword())) {
+					return "Success";
+				}
+				else {
+					return "Wrong password";
+				}
+			}
+		}
+		return "username does not exist";
+	}
+
 }
