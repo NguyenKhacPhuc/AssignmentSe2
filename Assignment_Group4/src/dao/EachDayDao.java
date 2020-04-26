@@ -66,17 +66,18 @@ public class EachDayDao {
 	}
 	public void updateDataInEachDayTable() throws IOException, SQLException {
 		Connection conn = DbConnect.getConnection();
-		String updateVnDaysData = "Insert into eachday (cases,recovered,date,death) values (?,?,?,?)";
+		String updateVnDaysData = "Insert into eachday (cases,recovered,date,deaths) values (?,?,?,?)";
 		JSONArray vnDaysData = DbConnect.getUpdateDays();
-		JSONObject nextday = vnDaysData.getJSONObject(vnDaysData.length()-1);
-		String query = "SELECT EXISTS(SELECT * from eachday WHERE date=?)";
+		String query = "SELECT date from eachday";
 		PreparedStatement preparedStatement = conn.prepareStatement(query);
-		preparedStatement.setString(1,nextday.getString("Date"));
 		ResultSet rs = preparedStatement.executeQuery();
-		if(rs.next()) {
+		int count = 0;
+		while(rs.next()) {
 			System.out.println("Already have");
+			count++;
 		}
-		else {
+		for(int i = count;i<vnDaysData.length();i++) {
+			JSONObject nextday = vnDaysData.getJSONObject(i);
 			double cases = nextday.getDouble("Confirmed");
 			double recovered = nextday.getDouble("Recovered");
 			String date = nextday.getString("Date");
@@ -87,7 +88,7 @@ public class EachDayDao {
 			preparedStatement1.setString(3, date);
 			preparedStatement1.setDouble(4, deaths);
 			preparedStatement1.executeUpdate();
-		}
+	}
 		
 }
 	public void insertDaysInVietNam() throws IOException, SQLException {
