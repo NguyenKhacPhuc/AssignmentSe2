@@ -20,14 +20,14 @@ import model.WorldGeneral;
  * Servlet implementation class WorlGeneralApi
  */
 @WebServlet("/world/worldhistorycal")
-public class WorlGeneralApi extends HttpServlet {
+public class WorlGeneralHistorical extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WorlGeneralApi() {
+    public WorlGeneralHistorical() {
         super();
         // TODO Auto-generated constructor stub
     }

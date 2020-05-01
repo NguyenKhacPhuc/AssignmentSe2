@@ -34,7 +34,6 @@ public class EachDayDao {
 
 	public void updateASpecificDay(EachDay day) throws SQLException {
 		Connection conn = DbConnect.getConnection();
-//	
 		String updateDay = "UPDATE eachday SET "
 				+ "date = ?"
 				+ ", cases = ?"

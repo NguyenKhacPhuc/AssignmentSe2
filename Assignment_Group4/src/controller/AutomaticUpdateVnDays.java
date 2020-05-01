@@ -20,14 +20,14 @@ import model.EachDay;
  * Servlet implementation class UpdateVnDays
  */
 @WebServlet("/vietnamdays/updatevndays")
-public class UpdateVnDays extends HttpServlet {
+public class AutomaticUpdateVnDays extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateVnDays() {
+    public AutomaticUpdateVnDays() {
         super();
         // TODO Auto-generated constructor stub
     }

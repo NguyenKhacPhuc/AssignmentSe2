@@ -39,7 +39,7 @@ public class World extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			WorldGeneralDao wG = new WorldGeneralDao();
-			WorldGeneral w = wG.getCurrentWorldGeneral();
+			model.WorldGeneral w = wG.getCurrentWorldGeneral();
 			String world = this.gson  .toJson(w);
 			PrintWriter out = response.getWriter();
 	        response.setContentType("application/json");

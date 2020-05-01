@@ -133,5 +133,22 @@ public class UserDao {
 		}
 		return "username does not exist";
 	}
+	public User searchUserByID(int ID) throws SQLException {
+		Connection conn = dbconnect.DbConnect.getConnection();
+		User user = null;
+		String searchUsers = "Select * FROM user WHERE ID="  + ID;
+		PreparedStatement preparedStatement = conn.prepareStatement(searchUsers);
+		ResultSet rs = preparedStatement.executeQuery();
+		while(rs.next()) {
+			int iD= rs.getInt("ID");
+			String name1 = rs.getString("username");
+			String password = rs.getString("password");
+			String email = rs.getString("email");
+			int age = rs.getInt("age");
+			String dob = rs.getString("dob");
+			user = new User(iD,name1,password,email,age,dob);
+	}
+		return user;
 
+}
 }
