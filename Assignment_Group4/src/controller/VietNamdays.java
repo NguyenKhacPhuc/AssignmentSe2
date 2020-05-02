@@ -59,11 +59,7 @@ public class VietNamdays extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String year = request.getParameter("year");
-		String day = request.getParameter("day");
-		String month = request.getParameter("month");
-		String date = String.join("/", year,month,day);
-		date = date.concat("T00:00:00Z");
+		String date = request.getParameter("date");
 		double cases = Double.parseDouble(request.getParameter("cases"));
 		double recovered = Double.parseDouble(request.getParameter("recovered"));
 		double deaths = Double.parseDouble(request.getParameter("deaths"));

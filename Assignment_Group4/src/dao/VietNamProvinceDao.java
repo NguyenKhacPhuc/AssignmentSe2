@@ -131,7 +131,28 @@ public class VietNamProvinceDao {
 		 }
 	}
 }
-
+	public VietNamProvinces selectAProvince(String name) throws SQLException {
+		VietNamProvinces vnP = new VietNamProvinces();
+		Connection conn = DbConnect.getConnection();
+		String insertValue = "SELECT * from provinces where name ="+ "\"" + name + "\"";
+		PreparedStatement preparedStatement = conn.prepareStatement(insertValue);
+		ResultSet rs = preparedStatement.executeQuery();
+		while(rs.next()) {
+			String name1 = rs.getString("name");
+			double confirmed = rs.getDouble("confirmed");
+			double underTreatment = rs.getDouble("undertreatment");
+			double recovered = rs.getDouble("recovered");
+			double deaths = rs.getDouble("deaths");
+			String date = rs.getString("date");
+			vnP.setName(name1);
+			vnP.setConfirmed(confirmed);
+			vnP.setDate(date);
+			vnP.setDeaths(deaths);
+			vnP.setRecovered(recovered);
+			vnP.setUnderTreatment(underTreatment);
+		}
+		return vnP;
+	}
 	public void insertAProvince(VietNamProvinces vnD) throws SQLException {
 		//INSERT TO DATABASE
 		Connection conn = DbConnect.getConnection();

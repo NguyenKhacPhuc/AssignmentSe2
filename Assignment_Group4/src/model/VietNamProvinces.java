@@ -11,6 +11,9 @@ public class VietNamProvinces {
 		this.deaths = deaths;
 		this.date = date;
 	}
+	public VietNamProvinces() {
+		// TODO Auto-generated constructor stub
+	}
 	private String name;
 	private double confirmed;
 	private double underTreatment;

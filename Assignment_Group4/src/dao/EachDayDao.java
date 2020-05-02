@@ -48,16 +48,30 @@ public class EachDayDao {
 		preparedStatement.setString(5, day.getDate());
 		preparedStatement.execute();
 	}
+	public EachDay selectOneDay(String date) throws SQLException {
+		EachDay eD = new EachDay();
+		Connection conn = DbConnect.getConnection();
+		String selectADay = "SELECT * from eachday where date=" + "\"" + date + "\"";
+		PreparedStatement preparedStatement = conn.prepareStatement(selectADay);
+		ResultSet rs = preparedStatement.executeQuery();
+		while(rs.next()) {
+			eD.setCases(rs.getDouble("cases"));
+			eD.setDate(rs.getString("date"));
+			eD.setDeaths(rs.getDouble("deaths"));
+			eD.setRecovered(rs.getDouble("recovered"));
+		}
+		return eD;
+	}
 	public void insertAday(EachDay day) throws SQLException {
 		Connection conn = DbConnect.getConnection();
 		String insertAllCountryName = "INSERT INTO eachday "
 				+ "(date,cases, recovered, deaths)"+" VALUES (?,?,?,?);";
-		String country = day.getDate();
+		String date = day.getDate();
 		double cases = day.getCases();
 		double recovered = day.getRecovered();
 		double deaths = day.getDeaths();
 		PreparedStatement preparedStatement = conn.prepareStatement(insertAllCountryName);
-		preparedStatement.setString(1, country);
+		preparedStatement.setString(1, date);
 		preparedStatement.setDouble(2, cases);
 		preparedStatement.setDouble(3, recovered);
 		preparedStatement.setDouble(4, deaths);
