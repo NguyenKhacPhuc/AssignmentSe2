@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,14 +19,14 @@ import model.VietNamProvinces;
  * Servlet implementation class SelectAProvinceByName
  */
 @WebServlet("/province/selectaprovince")
-public class SelectAProvinceByName extends HttpServlet {
+public class SelectAProvinceByID extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectAProvinceByName() {
+    public SelectAProvinceByID() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,11 +36,11 @@ public class SelectAProvinceByName extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String name = request.getParameter("name");
+		int ID = Integer.parseInt(request.getParameter("ID"));
 		VietNamProvinceDao vnD = new VietNamProvinceDao();
 		
 		try {
-			VietNamProvinces vnP = vnD.selectAProvince(name);
+			VietNamProvinces vnP = vnD.selectAProvince(ID);
 			String vnPStatistic = this.gson .toJson(vnP);
 			PrintWriter out = response.getWriter();
 	        response.setContentType("application/json");

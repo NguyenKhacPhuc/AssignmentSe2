@@ -65,13 +65,14 @@ public class VietNamProvinceDao {
 		PreparedStatement preparedStatement = conn.prepareStatement(getAll);
 		ResultSet rs = preparedStatement.executeQuery();
 		while(rs.next()) {
+			int iD = rs.getInt("ID");
 			String name = rs.getString("name");
 			double confirmed = rs.getDouble("confirmed");
 			double underTreatment = rs.getDouble("undertreatment");
 			double recovered = rs.getDouble("recovered");
 			double deaths = rs.getDouble("deaths");
 			String date = rs.getString("date");
-			v.add(new VietNamProvinces(name, confirmed, underTreatment, recovered, deaths, date));
+			v.add(new VietNamProvinces(iD,name, confirmed, underTreatment, recovered, deaths, date));
 			
 		}
 		return v;
@@ -131,25 +132,27 @@ public class VietNamProvinceDao {
 		 }
 	}
 }
-	public VietNamProvinces selectAProvince(String name) throws SQLException {
+	public VietNamProvinces selectAProvince(int iD) throws SQLException {
 		VietNamProvinces vnP = new VietNamProvinces();
 		Connection conn = DbConnect.getConnection();
-		String insertValue = "SELECT * from provinces where name ="+ "\"" + name + "\"";
+		String insertValue = "SELECT * from provinces where ID ="+iD;
 		PreparedStatement preparedStatement = conn.prepareStatement(insertValue);
 		ResultSet rs = preparedStatement.executeQuery();
 		while(rs.next()) {
-			String name1 = rs.getString("name");
+			int ID = rs.getInt("ID");
+			String name = rs.getString("name");
 			double confirmed = rs.getDouble("confirmed");
 			double underTreatment = rs.getDouble("undertreatment");
 			double recovered = rs.getDouble("recovered");
 			double deaths = rs.getDouble("deaths");
 			String date = rs.getString("date");
-			vnP.setName(name1);
+			vnP.setName(name);
 			vnP.setConfirmed(confirmed);
 			vnP.setDate(date);
 			vnP.setDeaths(deaths);
 			vnP.setRecovered(recovered);
 			vnP.setUnderTreatment(underTreatment);
+			vnP.setiD(ID);
 		}
 		return vnP;
 	}
@@ -176,14 +179,14 @@ public class VietNamProvinceDao {
 				+ ",recovered=?"
 				+ "deaths=?"
 				+ ",date=,"
-				+ " where name=?";
+				+ " where ID=?";
 		PreparedStatement preparedStatement1 = conn.prepareStatement(updateValue);
 		 preparedStatement1.setDouble(1, vnD.getConfirmed());
 		 preparedStatement1.setDouble(2, vnD.getUnderTreatment());
 		 preparedStatement1.setDouble(3, vnD.getRecovered());
 		 preparedStatement1.setDouble(4, vnD.getDeaths());
 		 preparedStatement1.setString(5, date);
-		 preparedStatement1.setString(6, vnD.getName());
+		 preparedStatement1.setInt(6, vnD.getiD());
 		 preparedStatement1.execute();
 	}
 	public void deleteAprovince(String name) throws SQLException {
